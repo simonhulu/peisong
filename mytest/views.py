@@ -11,12 +11,24 @@ class DecimalEncoder(json.JSONEncoder):
         if isinstance(o, Decimal):
             return float(o)
         super(DecimalEncoder, self).default(o)
-
+def cnareasublist(parent_code):
+    arr = list(Cnarea.objcts.filter(parent_code=parent_code))
+    dics = []
+    for obj in arr:
+        dic = model_to_dict(obj)
+        areacode = dic.get("area_code",None)
+        level = dic.get("level")
+        if level < 3:
+            dic["subList"] = cnareasublist(areacode)
+        dics.append(dic)
+    return dics
 def cnareas(request):
     arr = list(Cnarea.objects.filter(level=0))
     dics = []
     for obj in arr:
         dic = model_to_dict(obj)
+        areacode = dic.get("area_code",None)
+        dic["subList"] = cnareasublist(parent_code=areacode)
         dics.append(dic)
     dic = {"list": dics}
     return HttpResponse(json.dumps(dic, cls=DecimalEncoder), content_type='application/json')
