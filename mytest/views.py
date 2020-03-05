@@ -12,6 +12,14 @@ class DecimalEncoder(json.JSONEncoder):
             return float(o)
         super(DecimalEncoder, self).default(o)
 
+def cnareas(request):
+    arr = list(Cnarea.objects.filter(level=0))
+    dics = []
+    for obj in arr:
+        dic = model_to_dict(obj)
+    dic = {"list": dics}
+    return HttpResponse(json.dumps(dic, cls=DecimalEncoder), content_type='application/json')
+
 def index(request):
     page = int(request.GET.get('page',0))
     size = int(request.GET.get('size', 20))
