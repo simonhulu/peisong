@@ -18,8 +18,8 @@ def cnareasublist(parent_code):
         dic = model_to_dict(obj)
         areacode = dic.get("area_code",None)
         level = dic.get("level")
-        # if level < 3:
-        #     dic["subList"] = cnareasublist(areacode)
+        if level < 2:
+            dic["subList"] = cnareasublist(areacode)
         dics.append(dic)
     return dics
 
