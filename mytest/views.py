@@ -12,7 +12,7 @@ class DecimalEncoder(json.JSONEncoder):
             return float(o)
         super(DecimalEncoder, self).default(o)
 def cnareasublist(parent_code):
-    arr = list(Cnarea.objcts.filter(parent_code=parent_code))
+    arr = list(Cnarea.objects.filter(parent_code=parent_code))
     dics = []
     for obj in arr:
         dic = model_to_dict(obj)
