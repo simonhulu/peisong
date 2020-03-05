@@ -17,6 +17,7 @@ def cnareas(request):
     dics = []
     for obj in arr:
         dic = model_to_dict(obj)
+        dics.append(dic)
     dic = {"list": dics}
     return HttpResponse(json.dumps(dic, cls=DecimalEncoder), content_type='application/json')
 
