@@ -22,13 +22,14 @@ def cnareasublist(parent_code):
             dic["subList"] = cnareasublist(areacode)
         dics.append(dic)
     return dics
+
 def cnareas(request):
     arr = list(Cnarea.objects.filter(level=0))
     dics = []
     for obj in arr:
         dic = model_to_dict(obj)
         areacode = dic.get("area_code",None)
-        dic["subList"] = cnareasublist(parent_code=areacode)
+        # dic["subList"] = cnareasublist(parent_code=areacode)
         dics.append(dic)
     dic = {"list": dics}
     return HttpResponse(json.dumps(dic, cls=DecimalEncoder), content_type='application/json')
